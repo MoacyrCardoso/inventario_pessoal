@@ -94,4 +94,45 @@ l_serial.place(x=10, y=190)
 e_serial = Entry(frameMeio, width=30, justify='left', relief=SOLID)
 e_serial.place(x=130, y=191)
 
+
+# Criando Botões --------------------------------------------------------------------
+
+# Botão Carregar
+l_carregar = Label(frameMeio, text= 'Imagem do Item', height=1, anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
+l_carregar.place(x=10, y=220)
+b_carregar = Button(frameMeio, width=30, text= 'Carregar'.upper(), compound=CENTER, anchor=CENTER, overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_carregar.place(x=130, y=221)
+
+# Botão Inserir
+img_add = Image.open('add.png')
+img_add = img_add.resize((20,20))
+img_add = ImageTk.PhotoImage(img_add)
+
+b_inserir = Button(frameMeio, image=img_add, width=95, text=    ' Adicionar'.upper(), compound=LEFT,  anchor=NW,  overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_inserir.place(x=330, y=10)
+
+# Botão Atualizar
+img_update = Image.open('update.png')
+img_update = img_update.resize((20,20))
+img_update = ImageTk.PhotoImage(img_update)
+
+b_update = Button(frameMeio, image=img_update, width=95, text=    ' Atualizar'.upper(), compound=LEFT,  anchor=NW,  overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_update.place(x=330, y=50)
+
+# Botão Deletar
+img_delete = Image.open('delete.png')
+img_delete = img_delete.resize((20,20))
+img_delete = ImageTk.PhotoImage(img_delete)
+
+b_delete = Button(frameMeio, image=img_delete, width=95, text=    ' Deletar'.upper(), compound=LEFT,  anchor=NW,  overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_delete.place(x=330, y=90)
+
+# Botão Ver Imagem
+img_item = Image.open('item.png')
+img_item = img_item.resize((20,20))
+img_item = ImageTk.PhotoImage(img_item)
+
+b_item = Button(frameMeio, image=img_item, width=95, text=    ' Ver Item'.upper(), compound=LEFT,  anchor=NW,  overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_item.place(x=330, y=221)
+
 janela.mainloop()
