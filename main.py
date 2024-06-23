@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import Tk, StringVar, ttk
+from tkinter import messagebox
+
+from tkinter import filedialog as fd
 
 # Importando Pillow
 from PIL import Image, ImageTk
@@ -7,6 +10,10 @@ from PIL import Image, ImageTk
 # Importando Tkcalendar
 from tkcalendar import Calendar, DateEntry
 from datetime import date
+
+# Importando View
+from view import *
+
 
 ################# cores ###############
 co0 = "#2e2d2b"  # Preta
@@ -45,6 +52,65 @@ frameMeio.grid(row=1, column=0, pady=1, padx=0, sticky=NSEW)
 
 frameBaixo = Frame(janela, width=1043 , height=300, bg=co1, relief=FLAT,)
 frameBaixo.grid(row=2, column=0, pady=0, padx=1, sticky=NSEW)
+
+
+# Criando Funções ---------------------------------------------------------------------------------------------------------------
+global tree
+
+# Função Inserir
+def inserir():
+     global imagem, imagem_string, l_imagem
+
+     nome = e_nome.get()
+     local = e_local.get()
+     descricao = e_descricao.get()
+     model = e_model.get()
+     data = e_cal.get()
+     valor = e_valor.get()
+     serie = e_serial.get()
+     imagem = imagem_string
+
+
+     lista_inserir = [nome, local, descricao, model, data, valor, serie, imagem]
+
+     for i in lista_inserir:
+        if i=='':
+            messagebox.showerror('Erro', 'Preencha todos os campos')
+            return
+
+     inserir_form(lista_inserir)
+
+     messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
+
+     e_nome.delete(0, 'end')
+     e_local.delete(0, 'end')
+     e_descricao.delete(0, 'end')
+     e_model.delete(0, 'end')
+     e_cal.delete(0, 'end')
+     e_valor.delete(0, 'end')
+     e_serial.delete(0, 'end')
+        
+     mostrar()
+
+# Função para Escolher Imagem 
+global imagem, imagem_string, l_imagem  
+
+def escolher_imagem():
+    global imagem, imagem_string, l_imagem
+
+    imagem = fd.askopenfilename()
+    imagem_string = imagem
+
+
+    # Abrindo Imagem
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((170,170))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    l_imagem = Label(frameMeio, image=imagem, bg=co1, fg=co4)
+    l_imagem.place(x=700, y=10)
+
+
 
 # Trabalhando no Frame Cima ------------------------------------------------------------------------------------------------------
 # Abrindo Imagem
@@ -100,7 +166,7 @@ e_serial.place(x=130, y=191)
 # Botão Carregar
 l_carregar = Label(frameMeio, text= 'Imagem do Item', height=1, anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
 l_carregar.place(x=10, y=220)
-b_carregar = Button(frameMeio, width=29, text= 'Carregar'.upper(), compound=CENTER, anchor=CENTER, overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_carregar = Button(frameMeio,command=escolher_imagem, width=29, text= 'Carregar'.upper(), compound=CENTER, anchor=CENTER, overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
 b_carregar.place(x=130, y=221)
 
 # Botão Inserir
@@ -108,7 +174,7 @@ img_add = Image.open('add.png')
 img_add = img_add.resize((20,20))
 img_add = ImageTk.PhotoImage(img_add)
 
-b_inserir = Button(frameMeio, image=img_add, width=95, text=    ' Adicionar'.upper(), compound=LEFT,  anchor=NW,  overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
+b_inserir = Button(frameMeio,command=inserir, image=img_add, width=95, text=    ' Adicionar'.upper(), compound=LEFT,  anchor=NW,  overrelief=RIDGE,  font=('Ivy 8'), bg=co1, fg=co0)
 b_inserir.place(x=330, y=10)
 
 # Botão Atualizar
@@ -147,15 +213,16 @@ l_qtd.place(x=450, y=90)
 l_qtd_ = Label(frameMeio,  text=  '   Quantidade Total de Itens  ', height=1, anchor=NW, font=('Ivy 10 bold'), bg=co7, fg=co1)
 l_qtd_.place(x=450, y=92)
 
+
+# Tabela
 # funcao para mostrar
 def mostrar():
 
     # creating a treeview with dual scrollbars
     tabela_head = ['#Item','Nome',  'Sala/Área','Descrição', 'Marca/Modelo', 'Data da compra','Valor da compra', 'Número de série']
 
-    lista_itens = []
-
-    global tree
+    lista_itens = ver_form()
+   
 
     tree = ttk.Treeview(frameBaixo, selectmode="extended",columns=tabela_head, show="headings")
 

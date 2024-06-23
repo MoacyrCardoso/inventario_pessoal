@@ -30,7 +30,7 @@ def deletar_form():
 
 
 # Ver dados
-def ver_form(i):
+def ver_form():
     ver_dados = []
     with con:
           cur = con.cursor()
@@ -43,7 +43,7 @@ def ver_form(i):
     return ver_dados
 
 
-# Ver dados
+# Ver dados individual
 def ver_item(id):
     ver_dados_individual = []
     with con:
