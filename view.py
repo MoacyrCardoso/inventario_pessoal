@@ -22,7 +22,7 @@ def atualizar_form(i):
 
 
 # Deletar dados
-def deletar_form():
+def deletar_form(i):
     with con:
          cur = con.cursor()
          query = " DELETE FROM inventorio WHERE id=?"
